@@ -406,7 +406,7 @@ const escapeHTML=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt
 const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbxQrZFFop-KeTZpQ0_rfdhAz-mg-sErTGh_arp8NqEHKdJx4p7363LKU6YVIhlTdeml/exec';
 const state={
  public:{judul:'Asesmen Sumatif Matematika',subjudul:'Kelas VIII • Fase D',namaGuru:'Rima Fitriyani, M.Pd.',
-   jumlahSoal:50,durasiMenit:180,jumlahTP:5,daftarTP:[],kktp:73,kelas:['VIII D','VIII E'],perluKode:false},
+   jumlahSoal:50,durasiMenit:120,jumlahTP:5,daftarTP:[],kktp:73,kelas:['VIII D','VIII E'],perluKode:false},
  token:'',session:null,answers:{},flags:{},current:0,saving:false,needSave:false,submitting:false,
  tick:null,saveTimer:null,periodic:null,role:'murid',guruToken:'',guruName:'',guruData:null,
  draft:{nama:'',kelas:'VIII D',kodeAkses:''},profil:null,mode:'UTAMA',tpPilihan:[],
@@ -506,7 +506,7 @@ function loginPage(message=''){
    <div class="field"><label for="namaPeserta">Nama lengkap</label><input id="namaPeserta" required maxlength="90" autocomplete="name" placeholder="Nama sesuai daftar kelas" value="${escapeHTML(state.draft.nama)}"></div>
    <div class="field"><label for="kelasPeserta">Kelas</label><select id="kelasPeserta" required><option value="VIII D" ${state.draft.kelas==='VIII D'?'selected':''}>VIII D</option><option value="VIII E" ${state.draft.kelas==='VIII E'?'selected':''}>VIII E</option></select></div>
    ${cfg.perluKode?`<div class="field"><label for="kodeAkses">Kode akses ujian</label><input id="kodeAkses" value="${escapeHTML(state.draft.kodeAkses)}" required autocomplete="off"></div>`:''}
-   <div class="notice">Setelah masuk, pilih <b>Ujian Utama</b> atau <b>Remedial</b>. Kedua mode berdurasi maksimal 3 jam dan dapat dikumpulkan lebih cepat.</div>
+   <div class="notice">Setelah masuk, pilih <b>Ujian Utama</b> atau <b>Remedial</b>. Kedua mode berdurasi maksimal 2 jam dan dapat dikumpulkan lebih cepat.</div>
    <button class="button full" id="lanjutBtn" type="submit">Lanjut memilih ujian →</button>
    <p class="help">Jawaban disimpan otomatis. Masuk kembali menggunakan nama dan kelas yang sama jika ingin melanjutkan sesi.</p></form>`;
  app.innerHTML=`${nav()}<main class="wrap landing">
@@ -515,7 +515,7 @@ function loginPage(message=''){
  <div class="teacher-line" style="color:white;opacity:.9">Pengampu: ${escapeHTML(cfg.namaGuru||'Rima Fitriyani, M.Pd.')}</div>
 </div>
  <div class="hero-footer"><div class="hero-stat"><b>${cfg.jumlahSoal}</b><span>Butir soal utama</span></div>
- <div class="hero-stat"><b>3</b><span>Jam ujian</span></div><div class="hero-stat"><b>${cfg.jumlahTP}</b><span>Tujuan belajar</span></div></div></section>
+ <div class="hero-stat"><b>2</b><span>Jam ujian</span></div><div class="hero-stat"><b>${cfg.jumlahTP}</b><span>Tujuan belajar</span></div></div></section>
  <section class="card login-card"><div class="eyebrow">Akses CBT</div><h2>${guru?'Masuk akun guru':'Siap mulai ujian?'}</h2>
  <p class="sub">${guru?'Masuk untuk melihat hasil asesmen dan remedial murid.':'Masuk menggunakan nama lengkap dan kelas.'}</p>
  <div class="role-switch"><button type="button" id="roleMurid" class="role-option ${guru?'':'active'}">♟ Murid</button>
@@ -548,7 +548,7 @@ function showModePage(message=''){
  state.mode='UTAMA';state.tpPilihan=[];
  app.innerHTML=`${nav()}<main class="wrap mode-layout">
  <section class="card mode-header"><div class="eyebrow">Pilih jenis ujian</div><h2>${name}</h2>
- <p class="sub" style="margin-bottom:0">Kelas ${kelas} • Durasi maksimal <b>180 menit</b> per sesi. Jawaban boleh dikumpulkan kapan saja sebelum waktu habis.</p>
+ <p class="sub" style="margin-bottom:0">Kelas ${kelas} • Durasi maksimal <b>120 menit</b> per sesi. Jawaban boleh dikumpulkan kapan saja sebelum waktu habis.</p>
  ${p.aktif?`<div class="notice">Ada sesi ${p.aktif.mode==='REMEDIAL'?'Remedial':'Ujian Utama'} yang masih berjalan. Tekan mulai untuk melanjutkan sesi tersebut.</div>`:''}
  ${message?`<div class="notice danger">${escapeHTML(message)}</div>`:''}</section>
  <div class="mode-cards"><section class="card mode-card"><div class="mode-symbol">Σ</div><h3>Ujian Utama</h3>
@@ -625,7 +625,7 @@ function showExam(){
  <button class="sidebar-scrim" id="sidebarScrim" type="button" hidden></button>
  <div class="mobile-nav"><span class="mobile-nav-summary"><b id="mobileAnsweredCount">0</b> / ${s.pertanyaan.length} terjawab</span>
  <button class="button" id="openQuestionNav" type="button" aria-controls="examSidebar" aria-expanded="false">☷ Nomor Soal</button></div>
- <div class="bottom-note">Kumpulkan kapan saja sebelum 3 jam; jika waktu habis, ujian otomatis diselesaikan.</div>`;
+ <div class="bottom-note">Kumpulkan kapan saja sebelum 2 jam; jika waktu habis, ujian otomatis diselesaikan.</div>`;
  el('prevButton').onclick=()=>gotoQuestion(state.current-1);el('nextButton').onclick=()=>gotoQuestion(state.current+1);
  el('flagButton').onclick=toggleFlag;el('finishButton').onclick=openModal;
  el('openQuestionNav').onclick=openQuestionNav;el('closeQuestionNav').onclick=closeQuestionNav;el('sidebarScrim').onclick=closeQuestionNav;
